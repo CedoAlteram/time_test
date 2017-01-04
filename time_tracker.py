@@ -1,24 +1,60 @@
-import time, os, shutil
+import time, os, shutil, statistics
 
 
 x = 1
 
 local_file = "/media/test/0060.tif"
+remote_loc = "/media/151/CIFS_TEST/TIFS/0060.tif"
 
-while x < 20000000:
-    start_time = time.time()
-    if os.path.isfile("/media/test/0060.tif"):
-        shutil.copy("/media/test/0060.tif", "/media/Isilon/Isilon_Packages/test/move_test/0060.tif")
-    else:
-        print("Error: %s file not found" % "/media/test/0060.tif")
-    print("%s seconds" % (time.time() - start_time), "log A - UP", time.localtime())
-    if os.path.isfile("/media/test/0060.tif"):
-        os.remove("/media/test/0060.tif")
-    else:
-        print("Error: %s file not found" % "/media/test/0060.tif")
-    start_time = time.time()
-    shutil.copy("/media/Isilon/Isilon_Packages/test/move_test/0060.tif", "/media/test/0060.tif")
-    print("%s seconds" % (time.time() - start_time), "log B - DOWN", time.localtime())
-    x = x + 1
+x2 = 150
+y = 1
+
+
+
+
+while x2 < 160:
+    print(x2)
+    to = str("/media/") + str(x2) + str("/CIFS_TEST/TIFS/0060.tif")
+    #print(to)
+    x2 = x2 + 1
+    up = []
+    down = []
+    varUP = []
+    varDOWN = []
+
+
+    while x < 20:
+        start_time = time.time()
+        if os.path.isfile("/media/test/0060.tif"):
+            #print(to)
+            shutil.copy("/media/test/0060.tif", to)
+        else:
+            print("Error: %s file not found" % to)
+        # up-time
+        #up.append()
+        up.append(time.time() - start_time)
+        if os.path.isfile("/media/test/0060.tif"):
+            os.remove("/media/test/0060.tif")
+        else:
+            print("Error: %s file not found" % "/media/test/0060.tif")
+        start_time = time.time()
+        #print(to)
+        shutil.copy(to, "/media/test/0060.tif")
+        # down-time
+        down.append(time.time() - start_time)
+        #print(x)
+        x = x + 1
+    print(up)
+    print(down)
+    a = (statistics.pstdev(up))
+    print(('%.16f' % a), "stdUP")
+    b = (statistics.variance(up))
+    print(('%.16f' % b), "varUP")
+    c = (statistics.pstdev(down))
+    print(('%.16f' % c), "stdDOWN")
+    d = (statistics.variance(down))
+    print(('%.16f' % d), "varDOWN")
+
+    x = 0
 
 print('complete')

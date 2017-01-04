@@ -9,41 +9,35 @@ remote_loc = "/media/151/CIFS_TEST/TIFS/0060.tif"
 x2 = 150
 y = 1
 
-
-
-
 while x2 < 160:
     print(x2)
     to = str("/media/") + str(x2) + str("/CIFS_TEST/TIFS/0060.tif")
     #print(to)
-    x2 = x2 + 1
+    x2 += 1
+    #x2 = x2 + 1
     up = []
     down = []
     varUP = []
     varDOWN = []
 
-
-    while x < 20:
+    while x < 1000:
         start_time = time.time()
         if os.path.isfile("/media/test/0060.tif"):
             #print(to)
             shutil.copy("/media/test/0060.tif", to)
         else:
             print("Error: %s file not found" % to)
-        # up-time
-        #up.append()
+        #uptime
         up.append(time.time() - start_time)
         if os.path.isfile("/media/test/0060.tif"):
             os.remove("/media/test/0060.tif")
         else:
             print("Error: %s file not found" % "/media/test/0060.tif")
         start_time = time.time()
-        #print(to)
         shutil.copy(to, "/media/test/0060.tif")
         # down-time
         down.append(time.time() - start_time)
-        #print(x)
-        x = x + 1
+        x += 1
     print(up)
     print(down)
     a = (statistics.pstdev(up))

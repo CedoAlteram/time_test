@@ -67,7 +67,7 @@ while x2 < 160:
     print(('%.16f' % e), "stdDOWN")
     f = (statistics.variance(down))
     print(('%.16f' % f), "varDOWN")
-
+    print('----------------------------------------')
     x = 0
 
 print('complete')

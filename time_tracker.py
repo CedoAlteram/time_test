@@ -1,9 +1,7 @@
 #author aaron
 
-
 import time, os, shutil, statistics
 import numpy as np, scipy.stats as st
-
 
 x = 1
 
@@ -24,7 +22,7 @@ while x2 < 160:
     varUP = []
     varDOWN = []
 
-    while x < 3:
+    while x < 1000:
         #os.system('dd if=/dev/urandom of=/media/test/1GBb.txt bs=64 count=16 iflag=fullblock')
         start_time = time.time()
         if os.path.isfile("/media/test/gentoo_root.img"):

@@ -1,6 +1,6 @@
 #author aaron
 
-import time, os, shutil, statistics
+import time, os, shutil, statistics, sys
 import numpy as np, scipy.stats as st
 
 x = 1
@@ -10,7 +10,9 @@ remote_loc = "/media/151/CIFS_TEST/TIFS/gentoo_root.img"
 
 x2 = 150
 y = 1
+sys.stdout=open("/media/test/stats.txt", 'w')
 
+print('beginning')
 while x2 < 160:
     print(x2)
     to = str("/media/") + str(x2) + str("/CIFS_TEST/TIFS/gentoo_root.img")
@@ -22,7 +24,7 @@ while x2 < 160:
     varUP = []
     varDOWN = []
 
-    while x < 1000:
+    while x < 70:
         #os.system('dd if=/dev/urandom of=/media/test/1GBb.txt bs=64 count=16 iflag=fullblock')
         start_time = time.time()
         if os.path.isfile("/media/test/gentoo_root.img"):
@@ -46,9 +48,10 @@ while x2 < 160:
         # down-time
         #print("%s seconds" % (time.time() - start_time), "log B - DOWN", time.localtime())
         down.append(time.time() - start_time)
+        #print(x)
         x += 1
-    print(up)
-    print(down)
+    print(up, "UP List")
+    print(down, "DOWN List")
 
     intervalUP = st.t.interval(0.95, len(up)-1, loc=np.mean(up), scale=st.sem(up))
     print(intervalUP)
@@ -71,3 +74,4 @@ while x2 < 160:
     x = 0
 
 print('complete')
+sys.stdout.close()

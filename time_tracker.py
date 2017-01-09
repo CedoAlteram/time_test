@@ -1,6 +1,6 @@
 #author aaron
 
-import time, os, shutil, statistics, sys
+import time, os, statistics, sys
 import numpy as np, scipy.stats as st
 
 x = 1
@@ -10,45 +10,39 @@ remote_loc = "/media/151/CIFS_TEST/TIFS/gentoo_root.img"
 
 x2 = 150
 y = 1
-sys.stdout=open("/media/test/stats.txt", 'w')
-
+#sys.stdout=open("/media/test/stats.txt", 'w')
+os.system('cp -fr /media/original_file/gentoo_root.img /media/test')
+print('original file copied')
 print('beginning')
-while x2 < 160:
+while x2 < 161:
     print(x2)
     to = str("/media/") + str(x2) + str("/CIFS_TEST/TIFS/gentoo_root.img")
     #print(to)
     x2 += 1
-    #x2 = x2 + 1
     up = []
     down = []
     varUP = []
     varDOWN = []
 
-    while x < 70:
-        #os.system('dd if=/dev/urandom of=/media/test/1GBb.txt bs=64 count=16 iflag=fullblock')
+    while x < 3:
         start_time = time.time()
         if os.path.isfile("/media/test/gentoo_root.img"):
-            #print(to)
-            shutil.copy("/media/test/gentoo_root.img", to)
+            os.system('cp -fr /media/test/gentoo_root.img' + ' ' + to)
             os.sync()
-            #print('I copied a file up')
         else:
             print("Error: %s file not found" % to)
-        #uptime
-        #print("%s seconds" % (time.time() - start_time), "log A - UP", time.localtime())
+        print("%s seconds" % (time.time() - start_time), "log A - UP", time.localtime())
         up.append(time.time() - start_time)
         if os.path.isfile("/media/test/gentoo_root.img"):
             os.remove("/media/test/gentoo_root.img")
         else:
             print("Error: %s file not found" % "/media/test/gentoo_root.img")
         start_time = time.time()
-        shutil.copy(to, "/media/test/gentoo_root.img")
+        os.system('cp -fr ' + to + ' /media/test/gentoo_root.img')
         os.sync()
-        #print('I copied a file down')
         # down-time
-        #print("%s seconds" % (time.time() - start_time), "log B - DOWN", time.localtime())
+        print("%s seconds" % (time.time() - start_time), "log B - DOWN", time.localtime())
         down.append(time.time() - start_time)
-        #print(x)
         x += 1
     print(up, "UP List")
     print(down, "DOWN List")
@@ -70,8 +64,9 @@ while x2 < 160:
     print(('%.16f' % e), "stdDOWN")
     f = (statistics.variance(down))
     print(('%.16f' % f), "varDOWN")
+    print(time.localtime(), "THIS IS TIME!!!!!")
     print('----------------------------------------')
     x = 0
 
 print('complete')
-sys.stdout.close()
+#sys.stdout.close()

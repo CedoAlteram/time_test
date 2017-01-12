@@ -10,6 +10,10 @@ remote_loc = "/media/151/CIFS_TEST/TIFS/gentoo_root.img"
 
 x2 = 150
 y = 1
+
+cur = time.time()
+os.environ['TZ'] = "US/Pacific"
+time.tzset()
 #sys.stdout=open("/media/test/stats.txt", 'w')
 os.system('cp -fr /media/original_file/gentoo_root.img /media/test')
 print('original file copied')
@@ -31,7 +35,7 @@ while x2 < 161:
             os.sync()
         else:
             print("Error: %s file not found" % to)
-        print("%s seconds" % (time.time() - start_time), "log A - UP", time.localtime())
+        print("%s seconds" % (time.time() - start_time), "log A - UP", time.strftime("%T %Z", time.localtime(cur)))
         up.append(time.time() - start_time)
         if os.path.isfile("/media/test/gentoo_root.img"):
             os.remove("/media/test/gentoo_root.img")
@@ -41,7 +45,7 @@ while x2 < 161:
         os.system('cp -fr ' + to + ' /media/test/gentoo_root.img')
         os.sync()
         # down-time
-        print("%s seconds" % (time.time() - start_time), "log B - DOWN", time.localtime())
+        print("%s seconds" % (time.time() - start_time), "log B - DOWN", time.strftime("%T %Z", time.localtime(cur)))
         down.append(time.time() - start_time)
         x += 1
     print(up, "UP List")

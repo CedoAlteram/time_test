@@ -28,14 +28,15 @@ while x2 < 161:
     varUP = []
     varDOWN = []
 
-    while x < 3:
+    while x < 5:
         start_time = time.time()
         if os.path.isfile("/media/test/gentoo_root.img"):
             os.system('cp -fr /media/test/gentoo_root.img' + ' ' + to)
             os.sync()
         else:
             print("Error: %s file not found" % to)
-        print("%s seconds" % (time.time() - start_time), "log A - UP", time.strftime("%T %Z", time.localtime(cur)))
+        print("%s seconds" % (time.time() - start_time), "log A - UP", time.localtime())
+        #print("%s, seconds," % (time.time() - start_time), "log A, UP,", time.strftime("%T %Z", time.localtime(cur)))
         up.append(time.time() - start_time)
         if os.path.isfile("/media/test/gentoo_root.img"):
             os.remove("/media/test/gentoo_root.img")
@@ -45,7 +46,8 @@ while x2 < 161:
         os.system('cp -fr ' + to + ' /media/test/gentoo_root.img')
         os.sync()
         # down-time
-        print("%s seconds" % (time.time() - start_time), "log B - DOWN", time.strftime("%T %Z", time.localtime(cur)))
+        print("%s seconds" % (time.time() - start_time), "log A - UP", time.localtime())
+        #print("%s, seconds," % (time.time() - start_time), "log B, DOWN,", time.strftime("%T %Z", time.localtime(cur)))
         down.append(time.time() - start_time)
         x += 1
     print(up, "UP List")
@@ -68,7 +70,8 @@ while x2 < 161:
     print(('%.16f' % e), "stdDOWN")
     f = (statistics.variance(down))
     print(('%.16f' % f), "varDOWN")
-    print(time.localtime(), "THIS IS TIME!!!!!")
+    print(time.localtime(), "End Time")
+    #print(time.strftime("%T %Z", time.localtime(cur)), "End time per node")
     print('----------------------------------------')
     x = 0
 
